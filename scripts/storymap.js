@@ -1,24 +1,24 @@
-$(window).on('load', function() {
+$(window).on('load', function () {
   var documentSettings = {};
 
   // Some constants, such as default settings
   const CHAPTER_ZOOM = 15;
 
   // First, try reading Options.csv
-  $.get('csv/Options.csv', function(options) {
+  $.get('csv/Options.csv', function (options) {
 
-    $.get('csv/Chapters.csv', function(chapters) {
+    $.get('csv/Chapters.csv', function (chapters) {
       initMap(
         $.csv.toObjects(options),
         $.csv.toObjects(chapters)
       )
-    }).fail(function(e) { alert('Found Options.csv, but could not read Chapters.csv') });
+     }).fail(function (e) { alert('Found Options.csv, but could not read Chapters.csv') });
 
   // If not available, try from the Google Sheet
-  }).fail(function(e) {
+  }).fail(function (e) {
 
-    var parse = function(res) {
-      return Papa.parse(Papa.unparse(res[0].values), {header: true} ).data;
+    var parse = function (res) {
+      return Papa.parse(Papa.unparse(res[0].values), { header: true }).data;
     }
 
     // First, try reading data from the Google Sheet
@@ -100,8 +100,9 @@ $(window).on('load', function() {
 
     // Add logo
     if (getSetting('_mapLogo')) {
-      $('#logo').append('<img src="' + getSetting('_mapLogo') + '" />');
-      $('#top').css('height', '60px');
+      $('#header').append('<a href="https://kensingtonremembers.org/"><img class="logo" src="' + getSetting('_mapLogo') + '" /></a>')
+      //$('#logo').append('<img src="' + getSetting('_mapLogo') + '" />');
+      $('#top').css('height', '80px');
     } else {
       $('#logo').css('display', 'none');
       $('#header').css('padding-top', '25px');
@@ -119,7 +120,7 @@ $(window).on('load', function() {
 
     var markers = [];
 
-    var markActiveColor = function(k) {
+    var markActiveColor = function (k) {
       /* Removes marker-active class from all markers */
       for (var i = 0; i < markers.length; i++) {
         if (markers[i] && markers[i]._icon) {
@@ -143,7 +144,7 @@ $(window).on('load', function() {
     for (i in chapters) {
       var c = chapters[i];
 
-      if ( !isNaN(parseFloat(c['Latitude'])) && !isNaN(parseFloat(c['Longitude']))) {
+      if (!isNaN(parseFloat(c['Latitude'])) && !isNaN(parseFloat(c['Longitude']))) {
         var lat = parseFloat(c['Latitude']);
         var lon = parseFloat(c['Longitude']);
 
@@ -192,7 +193,7 @@ $(window).on('load', function() {
         });
       }
 
-      // YouTube
+          // YouTube
       if (c['Media Link'] && c['Media Link'].indexOf('youtube.com/') > -1) {
         media = $('<iframe></iframe>', {
           src: c['Media Link'],
@@ -224,11 +225,11 @@ $(window).on('load', function() {
       var mediaType = mediaTypes[mediaExt];
 
       if (mediaType) {
-        media = $('<' + mediaType + '>', {
-          src: c['Media Link'],
+       media = $('<' + mediaType + '>', {
+         src: c['Media Link'],
           controls: mediaType === 'audio' ? 'controls' : '',
           alt: c['Chapter']
-        });
+       });
 
         var enableLightbox = getSetting('_enableLightbox') === 'yes' ? true : false;
         if (enableLightbox && mediaType === 'img') {
@@ -241,10 +242,10 @@ $(window).on('load', function() {
           media = lightboxWrapper.append(media);
         }
 
-        mediaContainer = $('<div></div', {
-          class: mediaType + '-container'
-        }).append(media).after(source);
-      }
+       mediaContainer = $('<div></div', {
+         class: mediaType + '-container'
+       }).append(media).after(source);
+    }
 
       container
         .append('<p class="chapter-header">' + c['Chapter'] + '</p>')
@@ -254,7 +255,7 @@ $(window).on('load', function() {
 
       $('#contents').append(container);
 
-    }
+       }
 
     changeAttribution();
 
@@ -289,8 +290,8 @@ $(window).on('load', function() {
           && currentlyInFocus != i
         ) {
 
-          // Update URL hash
-          location.hash = i + 2;
+         // Update URL hash
+        location.hash = i + 2;
 
           // Remove styling for the old in-focus chapter and
           // add it to the new active chapter
@@ -375,7 +376,7 @@ $(window).on('load', function() {
               animate: true,
               duration: 2, // default is 2 seconds
             });
-          }
+            }
 
           // No need to iterate through the following chapters
           break;
@@ -389,6 +390,14 @@ $(window).on('load', function() {
         <a href='#top'>  \
           <i class='fa fa-chevron-up'></i></br> \
           <small>Top</small>  \
+        </a> \
+        <br/> \
+        <a href='https://kensingtonremembers.org/'>  \
+          <small>Kensington Remembers</small>  \
+        </a> \
+        <br/> \
+        <a href='https://kensingtonremembers.org/contact/'>  \
+          <small>Contact Us</small>  \
         </a> \
       </div> \
     ");
@@ -437,11 +446,11 @@ $(window).on('load', function() {
     $('div.loader').css('visibility', 'hidden');
 
     $('div#container0').addClass("in-focus");
-    $('div#contents').animate({scrollTop: '1px'});
+    $('div#contents').animate({ scrollTop: '1px' });
 
     // On first load, check hash and if it contains an number, scroll down
-    if (parseInt(location.hash.substr(1))) {
-      var containerId = parseInt( location.hash.substr(1) ) - 2;
+      if (parseInt(location.hash.substr(1))) {
+      var containerId = parseInt(location.hash.substr(1)) - 2;
       $('#contents').animate({
         scrollTop: $('#container' + containerId).offset().top
       }, 2000);
@@ -449,13 +458,13 @@ $(window).on('load', function() {
 
     // Add Google Analytics if the ID exists
     var ga = getSetting('_googleAnalytics');
-    if ( ga && ga.length >= 10 ) {
+    if (ga && ga.length >= 10) {
       var gaScript = document.createElement('script');
-      gaScript.setAttribute('src','https://www.googletagmanager.com/gtag/js?id=' + ga);
+      gaScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=' + ga);
       document.head.appendChild(gaScript);
 
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
       gtag('config', ga);
     }
@@ -469,13 +478,15 @@ $(window).on('load', function() {
    */
   function changeAttribution() {
     var attributionHTML = $('.leaflet-control-attribution')[0].innerHTML;
-    var credit = 'View <a href="'
+    var credit = 'Map <a href="'
       // Show Google Sheet URL if the variable exists and is not empty, otherwise link to Chapters.csv
       + (typeof googleDocURL !== 'undefined' && googleDocURL ? googleDocURL : './csv/Chapters.csv')
-      + '" target="_blank">data</a>';
+      + '" target="_blank">data</a> and photos by';
 
     var name = getSetting('_authorName');
+    var web = getSetting('_webDeveloper')
     var url = getSetting('_authorURL');
+    var weburl = getSetting('_webDeveloperURL');
 
     if (name && url) {
       if (url.indexOf('@') > 0) { url = 'mailto:' + url; }
@@ -486,7 +497,7 @@ $(window).on('load', function() {
       credit += ' | ';
     }
 
-    credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
+       credit += 'View <a href="' + getSetting('_githubRepo') + '">code</a>';
     if (getSetting('_codeCredit')) credit += ' by ' + getSetting('_codeCredit');
     credit += ' with ';
     $('.leaflet-control-attribution')[0].innerHTML = credit + attributionHTML;
