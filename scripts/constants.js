@@ -8,6 +8,7 @@ var constants = {
 	_authorURL: 'Author Email or Website',
   _codeCredit: 'Code Credit',
 	_githubRepo: 'Author GitHub Repo Link',
+  _webDeveloperURL: 'Web Development Assistant Email',
 	// Map Settings
 	_tileProvider: 'Basemap Tiles',
 	_zoomControls: 'Zoom Controls',
