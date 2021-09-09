@@ -4,7 +4,7 @@ Storymap Title,,,
 Storymap Subtitle,,,
 Storymap Logo,https://kensingtonremembers.org/wp-content/uploads/2020/06/logo_blklg.png,Path to a logo image,
 Map Settings,,,
-Basemap Tiles,MapBox,Drop-down menu for background basemap tiles,https://leaflet-extras.github.io/leaflet-providers/preview/
+Basemap Tiles,Mapbox,Drop-down menu for background basemap tiles,https://leaflet-extras.github.io/leaflet-providers/preview/
 Zoom Controls,bottomright,,
 Narrative Background Color,,,
 Narrative Text Color,,,
