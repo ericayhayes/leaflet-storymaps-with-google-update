@@ -216,8 +216,7 @@
 			}
 		},
 		MapBox: {
-			url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/13/2388/3100?access_token=pk.eyJ1IjoiZXloYXllc3ZpbGxhbm92YSIsImEiOiJjanprZmY2dGMwMXEwM29xcGoxdnU3ZGU2In0.fGzcDtt3pRUN0uMp7w-vAA',
-			options: {
+			url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/14/4774/6202?access_token='pk.eyJ1IjoiZXloYXllc3ZpbGxhbm92YSIsImEiOiJjanprZmY2dGMwMXEwM29xcGoxdnU3ZGU2In0.fGzcDtt3pRUN0uMp7w-vAA'',
 				options: {
 				attribution:
 					'Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; ' +
