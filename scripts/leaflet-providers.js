@@ -216,18 +216,15 @@
 			}
 		},
 		MapBox: {
-			url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZXloYXllc3ZpbGxhbm92YSIsImEiOiJjanprZmY2dGMwMXEwM29xcGoxdnU3ZGU2In0.fGzcDtt3pRUN0uMp7w-vAA',
+			url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/13/2388/3100?access_token=pk.eyJ1IjoiZXloYXllc3ZpbGxhbm92YSIsImEiOiJjanprZmY2dGMwMXEwM29xcGoxdnU3ZGU2In0.fGzcDtt3pRUN0uMp7w-vAA',
 			options: {
+				options: {
 				attribution:
-					'Imagery from <a href="http://mapbox.com/about/maps/">Mapbox</a> &mdash; ' +
-					'{attribution.OpenStreetMap}',
-					tileSize: 512.
-					maxZoom: 18,
-					zoomOffset: -1,
-					id: 'ck0o747481bpy1cnjzuwiqryc',
-					accessToken: 'pk.eyJ1IjoiZXloYXllc3ZpbGxhbm92YSIsImEiOiJjanprZmY2dGMwMXEwM29xcGoxdnU3ZGU2In0.fGzcDtt3pRUN0uMp7w-vAA'
-
+					'Imagery from <a href="http://mapbox.com/about/maps/">MapBox</a> &mdash; ' +
+					'Map data {attribution.OpenStreetMap}',
+				subdomains: 'abcd'
 			}
+
 		},
 		Stamen: {
 			url: '//stamen-tiles-{s}.a.ssl.fastly.net/{variant}/{z}/{x}/{y}.{ext}',
