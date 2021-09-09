@@ -82,12 +82,12 @@ $(window).on('load', function () {
   /**
    * Loads the basemap and adds it to the map
    */
-  function addBaseMap() {
-    var basemap = trySetting('_tileProvider', 'NatGeo_World_Map');
-    L.tileLayer.provider(basemap, {
-      maxZoom: 18
-    }).addTo(map);
-  }
+   function addBaseMap() {
+     var basemap = trySetting('_tileProvider', 'Stamen.TonerLite');
+     L.tileLayer.provider(basemap, {
+       maxZoom: 18
+     }).addTo(map);
+   }
 
   function initMap(options, chapters) {
     createDocumentSettings(options);
