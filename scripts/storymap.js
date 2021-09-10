@@ -4,21 +4,26 @@ $(window).on('load', function () {
   // Some constants, such as default settings
   const CHAPTER_ZOOM = 15;
 
+  // This watches for the scrollable container
+  var scrollPosition = 0;
+  $('div#contents').scroll(function() {
+    scrollPosition = $(this).scrollTop();
+  });
   // First, try reading Options.csv
-  $.get('csv/Options.csv', function (options) {
+  $.get('csv/Options.csv', function(options) {
 
-    $.get('csv/Chapters.csv', function (chapters) {
+    $.get('csv/Chapters.csv', function(chapters) {
       initMap(
         $.csv.toObjects(options),
         $.csv.toObjects(chapters)
       )
-     }).fail(function (e) { alert('Found Options.csv, but could not read Chapters.csv') });
+    }).fail(function(e) { alert('Found Options.csv, but could not read Chapters.csv') });
 
   // If not available, try from the Google Sheet
-  }).fail(function (e) {
+   }).fail(function(e) {
 
-    var parse = function (res) {
-      return Papa.parse(Papa.unparse(res[0].values), { header: true }).data;
+     var parse = function(res) {
+      return Papa.parse(Papa.unparse(res[0].values), {header: true} ).data;
     }
 
     // First, try reading data from the Google Sheet
@@ -104,8 +109,8 @@ $(window).on('load', function () {
       //$('#logo').append('<img src="' + getSetting('_mapLogo') + '" />');
       $('#top').css('height', '80px');
     } else {
-      $('#logo').css('display', 'none');
-      $('#header').css('padding-top', '25px');
+      $('.logo').css('display', 'none');
+      //$('#header').css('padding-top', '25px');
     }
 
     // Load tiles
@@ -120,7 +125,7 @@ $(window).on('load', function () {
 
     var markers = [];
 
-    var markActiveColor = function (k) {
+     var markActiveColor = function(k) {
       /* Removes marker-active class from all markers */
       for (var i = 0; i < markers.length; i++) {
         if (markers[i] && markers[i]._icon) {
@@ -144,7 +149,7 @@ $(window).on('load', function () {
     for (i in chapters) {
       var c = chapters[i];
 
-      if (!isNaN(parseFloat(c['Latitude'])) && !isNaN(parseFloat(c['Longitude']))) {
+        if ( !isNaN(parseFloat(c['Latitude'])) && !isNaN(parseFloat(c['Longitude']))) {
         var lat = parseFloat(c['Latitude']);
         var lon = parseFloat(c['Longitude']);
 
@@ -217,6 +222,7 @@ $(window).on('load', function () {
         'tiff': 'img',
         'gif': 'img',
         'mp3': 'audio',
+        'mp4': 'audio',
         'ogg': 'audio',
         'wav': 'audio',
       }
@@ -316,7 +322,7 @@ $(window).on('load', function () {
           // Add chapter's overlay tiles if specified in options
           if (c['Overlay']) {
 
-            var opacity = parseFloat(c['Overlay Transparency']) || 1;
+ var opacity = (c['Overlay Transparency'] !== '') ? parseFloat(c['Overlay Transparency']) : 1;
             var url = c['Overlay'];
 
             if (url.split('.').pop() === 'geojson') {
@@ -372,11 +378,8 @@ $(window).on('load', function () {
           // Fly to the new marker destination if latitude and longitude exist
           if (c['Latitude'] && c['Longitude']) {
             var zoom = c['Zoom'] ? c['Zoom'] : CHAPTER_ZOOM;
-            map.flyTo([c['Latitude'], c['Longitude']], zoom, {
-              animate: true,
-              duration: 2, // default is 2 seconds
-            });
-            }
+            map.flyTo([c['Latitude'], c['Longitude']], zoom);
+          }
 
           // No need to iterate through the following chapters
           break;
@@ -446,7 +449,7 @@ $(window).on('load', function () {
     $('div.loader').css('visibility', 'hidden');
 
     $('div#container0').addClass("in-focus");
-    $('div#contents').animate({ scrollTop: '1px' });
+    $('div#contents').animate({scrollTop: '1px'});
 
     // On first load, check hash and if it contains an number, scroll down
       if (parseInt(location.hash.substr(1))) {
@@ -458,16 +461,17 @@ $(window).on('load', function () {
 
     // Add Google Analytics if the ID exists
     var ga = getSetting('_googleAnalytics');
-    if (ga && ga.length >= 10) {
+        if ( ga && ga.length >= 10 ) {
       var gaScript = document.createElement('script');
-      gaScript.setAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=' + ga);
-      document.head.appendChild(gaScript);
+           var gaScript = document.createElement('script');
+          gaScript.setAttribute('src','https://www.googletagmanager.com/gtag/js?id=' + ga);
+          document.head.appendChild(gaScript);
 
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', ga);
-    }
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', ga);
+        }
 
 
   }
@@ -490,7 +494,7 @@ $(window).on('load', function () {
 
     if (name && url) {
       if (url.indexOf('@') > 0) { url = 'mailto:' + url; }
-      credit += ' by <a href="' + url + '">' + name + '</a> | ';
+      credit += ' <a href="' + url + '">' + name + '</a> | ';
     } else if (name) {
       credit += ' by ' + name + ' | ';
     } else {
