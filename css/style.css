@@ -183,6 +183,7 @@ img.logo {
 h1 {
   margin: 0;
   font-size: 1.35em;
+  display: none;
 }
 
 h2 {
